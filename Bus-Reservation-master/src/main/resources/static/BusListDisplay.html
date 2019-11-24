@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="BusListDisplay.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+	function display(){
+	var response = JSON.parse(sessionStorage.getItem("BusList"));
+	$.each(response, function(i, Bus) {
+		var row = $('<tr/>');
+		var column1 = $('<td/>').text(Bus.transportCompanyName);
+		var column2 = $("<td/>").text(Bus.arrivalTime);
+		var column3 = $("<td/>").text(Bus.departureTime);
+		var column4 = $("<td/>").text(Bus.duration);
+ 		var column5 = $("<td/>").text(Bus.seatsFree);
+ 		var column6 = $("<td/>").text(Bus.busType);
+ 		var column7=$("<td/>").text(Bus.fare);
+ 		/* var r= $('<input type="button" id='+Bus.tripId+' value="Select Bus"/>') */
+ 		var button= $('<button  class="bus" value='+Bus.tripId+'>Select Bus</button>');
+		row.append(column1);
+		row.append(column2);
+		row.append(column3); 
+		row.append(column4);
+		row.append(column5);
+		row.append(column6);
+		row.append(column7);
+		row.append(button);
+		$('#tbl').append(row);
+
+	})
+}
+	
+/* 	function selected(){
+		$(".bus").val();
+		sessionStorage.setItem('tripID',$(".bus").val());
+	} */
+		
+	$(document).ready(function () {
+	$(".bus").click( function() {
+			/* $(".bus").val(); */
+			sessionStorage.setItem('tripID',$(this).val());
+			window.location = '/PassengerDetails.html'
+		});
+	
+	});
+		
+		//window.location.href = "https://www.google.com";
+
+</script>
+</head>
+<body onload="display()">
+<div class="table-responsive">  
+		<table id="tbl"></table>
+</div>
+</body>
+</html>

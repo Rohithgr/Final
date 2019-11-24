@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="UpdateBus.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+
+<script src= "https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+$(function() {
+$("#update").submit(function(evt){
+evt.preventDefault();
+var obj={
+transportCompanyName: $("#transportname").val(),
+seats: $("#totseat").val(),
+bustype: $("#bustype").val(),
+startOfService :$("#sos").val(),
+endOfSerivce :$("#eos").val()
+}
+
+var url = '/update';
+$.ajax({
+    url : url, //the url we want to hit
+    method : 'POST',//get or post any other method of http
+    data : JSON.stringify(obj),//What we want to send to the server
+    contentType : 'application/json',
+    success : function(response) {
+    alert(JSON.stringify(response));
+    
+    }
+   })
+})
+})
+</script>
+
+</head>
+<body>
+
+<div class="booking-form-box">
+<div class="booking-form">
+<form id="update">
+<label id="ss">UPDATE BUS DETAILS</label><br/>
+<label>TRANSPORT COMPANY NAME</label>
+<input type="text"  class="form-control" id="transportname"/>
+<label>SEATS</label>
+<input type="number" class="form-control" id="totseat" />
+<label>BUSTYPE</label>
+<input type="text" class="form-control" id="bustype"/>
+<label>START OF SERVICE</label>
+<input id="sos" type="date" class="form-control select-date"/>
+<label>END OF SERVICE</label>
+ <input id="eos" type="date" class="form-control select-date"/>
+<div class="input-grp input-submit">
+					<button type="submit" class="button">
+						<span>UPDATE BUS DETAILS</span>
+					</button>
+					<br />
+					<br />
+				</div>
+</form>
+</div>
+</div>
+
+
+</body>
+</html>

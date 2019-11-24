@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Review</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script >
+function display(){
+	var BusList = JSON.parse(sessionStorage.getItem("BusList"));
+	$.each(BusList, function(i, Bus) {
+		if(Bus.tripId==sessionStorage.getItem("tripID")){
+			$("#bus").append("<h1> Booking For :"+Bus.transportCompanyName+"</h1>");
+			$("#bus").append(" <h2> Departure Time :"+Bus.departureTime+"</h2>");
+			$("#bus").append(" <h2> Arrival Time :"+Bus.arrivalTime+"</h2>"); 
+			$("#bus").append("<h2> Duration :"+Bus.duration+" Hrs</h2>");
+			$("#bus").append(" <h2> Bus Type  :"+Bus.busType+"</h2>");
+			
+		}
+
+	})//bus display loop
+	$("#pass").append(" <br/><h2> Passenger Details </h2>");
+	$.each(JSON.parse(sessionStorage.getItem("passengers")),function(i,Pass){
+		
+		$("#pass").append("<h3> Passenger "+i+1+"</h3>");
+		$("#pass").append(" <h3> Name : "+Pass.name+"</h3>");
+		$("#pass").append("<h3>  Gender : "+Pass.gender+"</h3>");
+		
+	})//passenger Display loop
+	 $('#frm').append('<button class="book">Continue To Payment</button>');
+}
+
+	$(document).on("click","button.book",function() {
+				 var Passengers = new Array();
+	Passengers=JSON.parse(sessionStorage.getItem("passengers"));
+	var send={
+			passengers: Passengers,
+			tripID : sessionStorage.getItem('tripID'),
+			journeyDate:sessionStorage.getItem('journeyDate'),
+			customerId:session.getItem('customerId')
+		};
+	//alert(JSON.stringify(send.passengers))
+	$.ajax({
+		url : '/ticketReservation',
+		method : 'POST', 
+		data:JSON.stringify(send), 
+		contentType :'application/json',
+		success: function(response) {
+			alert(JSON.stringify(response));
+			sessionStorage.setItem("Ticket",JSON.stringify(response));
+			window.location.replace('/TicketBooked.html');
+		} 
+			
+	})
+});
+	
+	
+</script>
+</head>
+<body onload="display()">
+<div id="bus"></div>
+<div id="pass"></div>
+
+<div id="frm"></div>
+</body>
+</html>

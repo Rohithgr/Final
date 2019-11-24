@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Reservation Page</title>
+<link rel="stylesheet" type="text/css" href="Reservation.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+function display(){
+	var response = JSON.parse(sessionStorage.getItem("BusList"));
+	$.each(response, function(i, Bus) {
+		if(Bus.tripId==sessionStorage.getItem("tripID")){
+			$("h1").append(" <b> Booking For "+Bus.transportCompanyName+"</b><br/>");
+			$("h2").append(" <b> Departure Time "+Bus.departureTime+"</b>.<br/>");
+			$("h2").append(" <b> Arrival Time "+Bus.arrivalTime+"</b>.<br/>"); 
+			$("h2").append(" <b> Duration "+Bus.duration+" Hrs</b>.<br/>");
+			$("h2").append(" <b> Bus Type  "+Bus.busType+"</b>.<br/>");
+			
+		}
+
+	})
+}
+
+</script>
+<script>
+$(function(){
+	var noOfPassengers = sessionStorage.getItem('noOfSeats');
+	
+    for (i=0;i<noOfPassengers;i++){
+    	form = $("<p/>");
+    	
+    	form.append('<h3>Enter Details for Passenger '+(i+1)+'</h3>');
+    	form.append('Enter name : <input id="name'+i+'"class="name" /><br/>');
+    	form.append('<br/>Enter Gender : <input type="radio" name="gender'+i+'" value="MALE"> Male');
+    	form.append('<input type="radio" name="gender'+i+'" id="choicefemale" value="FEMALE"> Female');
+    	
+    	$('#frm').append(form);
+    }
+    
+    $('#frm').append('<button type="submit">Continue</button>');
+    
+    $("#frm").submit(function(evt) {
+    	evt.preventDefault();
+		var passengers = new Array();
+		for(i=0; i<noOfPassengers; i++) {
+    		var passenger = {
+    				name : $("#name"+i).val(),
+    				gender : $("input[name='gender"+i+"']:checked").val(),
+    				//tripID :sessionStorage.getItem('tripID')
+    		}
+    		passengers[i] = passenger;
+    		
+    	}
+		
+		var send={
+			passengers: passengers,
+			tripID : sessionStorage.getItem('tripID'),
+			journeyDate:sessionStorage.getItem('journeyDate')
+		}
+		
+		$.ajax({
+			url : '/ticketReservation',
+			method : 'POST', 
+			data:JSON.stringify(send), 
+			contentType :'application/json',
+			success : function(response) {
+				alert(JSON.stringify(response));
+			}
+		})
+		alert(JSON.stringify(passengers));
+    })
+})
+
+
+
+</script>
+</head>
+<body onload="display()">
+<div class="topnav">
+		<div class="logo">
+			<nav>
+				<img
+					src="https://cdn.pixabay.com/photo/2018/03/07/16/07/coach-3206326__340.png"
+					width="120" height="100">
+				
+			</nav>
+		</div>
+		<nav>
+			<a href="Index.html">Home</a> 
+			<a href="">About Us</a> 
+			<a	href="UserRegistration.html">Sign Up</a> 
+			<a href="Login.html">Sign In</a>
+			<h3 id="username" align="right"></h3>
+		</nav>
+	</div>
+
+
+<h1></h1>
+<h2></h2>
+<div class="booking-form-box">
+        
+ <form id="frm"></form>
+	
+</div>	
+
+</body>
+</html>

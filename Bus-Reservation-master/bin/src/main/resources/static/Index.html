@@ -1,0 +1,121 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="searchcs.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+	$(function() {
+		$("#search").submit(
+				function(evt) {
+					evt.preventDefault();
+
+					var source = $("#source").val();
+					var destination = $("#destination").val();
+					var journeyDate = $("#date").val();
+					var noOfseats = $("#noofseats").val();
+					var url = "/BusSearch?source=" + source + "&destination="
+							+ destination + "&journeyDate=" + journeyDate
+							+ "&noOfseats=" + noOfseats;
+
+					$.ajax({
+						url : url, //the url we want to hit
+						method : 'GET',//get or post any other method of http
+						type : 'json',
+						success : function(response) {
+							alert(JSON.stringify(response));
+							
+							$.each(response, function(index, Bus) {
+								localStorage.setItem('myMainKey'+index,JSON.stringify(Bus));
+								window.location = '/retrivaltest.html';
+						/* 		var row = $("<tr/>");
+								var column1 = $("<td/>").text(Bus.transportCompanyName);
+								var column2 = $("<td/>").text(Bus.busType);
+								var column3 = $("<td/>").text(Bus.arrivalTime);
+								var column4 = $("<td/>").text(Bus.departureTime);
+								row.append(column1);
+								row.append(column2);
+								row.append(column3);
+								row.append(column4);
+								$('#tb').append(row); */
+
+							})
+						}
+
+					})
+				})
+	})
+</script>
+
+</head>
+<body>
+	<div class="topnav">
+		<div class="logo">
+			<nav>
+				<img
+					src="https://cdn.pixabay.com/photo/2018/03/07/16/07/coach-3206326__340.png"
+					width="120" height="100">
+				<p>buzz bus</p>
+			</nav>
+		</div>
+		<nav>
+			<a href="Index.html">Home</a> 
+			<a href="Login.html">Sign In</a> <a
+				href="UserRegistration.html">Sign Up</a> <a href="">About Us</a>
+		</nav>
+	</div>
+
+	<div class="booking-form-box">
+		<div class="booking-form">
+			<form id="search">
+				<br /> <label id="ss">SEARCH FOR BUS TICKETS</label><br /> <label>SOURCE</label>
+				<input type="text" class="form-control" name="src" id="source"
+					placeholder="FROM" pattern="[A-Z]+" required /> <label>DESTINATION</label>
+				<input type="text" class="form-control" name="dest" id="destination"
+					placeholder="TO" pattern="[A-Z]+" required /> <label>DATE</label> <input
+					id="date" type="date" class="form-control select-date">
+
+				<div class="input-grp">
+					<label>SEATS</label> <select type="number" class="custom-select"
+						id="noofseats" name="seats">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+					</select>
+				</div>
+				<div class="input-grp input-submit">
+					<button type="submit" class="button">
+						<span>SEARCH</span>
+					</button>
+					<br />
+					<br />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<table id="tb">
+
+		<tr style="border: 1px solid white;">
+
+		</tr>
+	</table>
+	<br />
+	<br />
+	<br />
+
+
+	<div class="topnav">
+
+		<nav>
+			<a href="">Copyright@</a> <a href="">Contact Us</a>
+		</nav>
+
+	</div>
+
+
+</body>
+</html>

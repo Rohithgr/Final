@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Reservation Page</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+function display(){
+	var response = JSON.parse(sessionStorage.getItem("BusList"));
+	$.each(response, function(i, Bus) {
+		if(Bus.tripId==sessionStorage.getItem("tripID")){
+			$("h1").append(" <b> Booking For "+Bus.transportCompanyName+"</b><br/>");
+			$("h2").append(" <b> Departure Time "+Bus.departureTime+"</b>.<br/>");
+			$("h2").append(" <b> Arrival Time "+Bus.arrivalTime+"</b>.<br/>"); 
+			$("h2").append(" <b> Duration "+Bus.duration+" Hrs</b>.<br/>");
+			$("h2").append(" <b> Bus Type  "+Bus.busType+"</b>.<br/>");
+			
+		}
+
+	})
+}
+
+</script>
+<script>
+$(function(){
+	var noOfPassengers = sessionStorage.getItem('noOfSeats');
+	
+    for (i=0;i<noOfPassengers;i++){
+    	form = $("<p/>");
+    	
+    	form.append('<h3>Enter Details for Passenger '+(i+1)+'</h3>');
+    	form.append('Enter name : <input id="name'+i+'"class="name" /><br/>');
+    	form.append('<br/>Enter Gender : <input type="radio" name="gender'+i+'" value="MALE"> Male');
+    	form.append('<input type="radio" name="gender'+i+'" id="choicefemale" value="FEMALE"> Female');
+    	
+    	$('#frm').append(form);
+    }
+    
+    $('#frm').append('<button type="submit">Continue</button>');
+    
+    $("#frm").submit(function(evt) {
+    	evt.preventDefault();
+		var passengers = new Array();
+		for(i=0; i<noOfPassengers; i++) {
+    		var passenger = {
+    				name : $("#name"+i).val(),
+    				gender : $("input[name='gender"+i+"']:checked").val(),
+    				//tripID :sessionStorage.getItem('tripID')
+    		}
+    		passengers[i] = passenger;
+    		
+    	}
+		sessionStorage.setItem('passengers',JSON.stringify(passengers))
+		alert(JSON.stringify(passengers));
+		window.location = '/ReviewBooking.html'
+	
+		
+		/* 	AJAX
+		$.ajax({
+			url : '/ticketReservation',
+			method : 'POST', 
+			data:JSON.stringify(send), 
+			contentType :'application/json',
+			success : function(response) {
+				alert(JSON.stringify(response));
+				window.location = '/ReviewBooking.html'
+			}
+		}) */
+		
+    })
+})
+
+
+
+</script>
+</head>
+<body onload="display()">
+<h1></h1>
+<h2></h2>
+ <form id="frm"></form>
+</body>
+</html>

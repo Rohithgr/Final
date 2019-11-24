@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="TicketBooked.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script>
+function display(){
+	var response = JSON.parse(sessionStorage.getItem("Ticket"));
+	
+		var row = $('<tr/>');
+		var column1 = $('<td/>').text(response.reservID);
+		var column2 = $("<td/>").text(response.noOfSeats);
+		 $.each(response.s, function(index,seatnumbers){
+			 var column3 = $("<td/>").text( seatnumbers + '<br>');
+	        });
+		
+		
+ 		/* var r= $('<input type="button" id='+Bus.tripId+' value="Select Bus"/>') */
+ 		
+		row.append(column1);
+		row.append(column2);
+		row.append(column3); 
+		$('#tbl').append(row);
+
+	
+}
+
+</script>
+</head>
+<body onload="display()">
+
+<div class="topnav">
+		<div class="logo">
+			<nav>
+				<img
+					src="https://cdn.pixabay.com/photo/2018/03/07/16/07/coach-3206326__340.png"
+					width="120" height="100">
+				
+			</nav>
+		</div>
+		<nav>
+			<a href="Index.html">Home</a> 
+			<a href="">About Us</a> 
+			<a	href="UserRegistration.html">Sign Up</a> 
+			<a href="Login.html">Sign In</a>
+			
+		</nav>
+	</div>
+
+<h1>Your ticket has been booked successfully </h1><br/>
+<div class="table-responsive">  
+		<table id="tbl">
+		<tr>
+             <td>Reservation Id</td>
+              <td>Number Of Seats</td>
+              <td>Seat Number</td>
+              
+                
+</tr>
+		</table>
+</body>
+</html>

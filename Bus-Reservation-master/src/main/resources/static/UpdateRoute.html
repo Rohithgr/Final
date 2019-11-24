@@ -1,0 +1,86 @@
+<html>
+<head>
+
+<link rel="stylesheet"type="text/css" href="UpdateRoute.css"/>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+$(function() {
+$("#details").submit(function(evt){
+evt.preventDefault();
+var obj={
+ source:$("#source").val(),
+ destination:$("#destination").val(),
+ duration: $("#duration").val(),
+ distance:$("#distance").val()
+}
+
+$.ajax({
+	 url : '/routedetails',
+	    method : 'POST',
+	    data : JSON.stringify(obj),
+	    contentType : 'application/json',
+	    success : function(response) {
+    alert(JSON.stringify(response));
+    }
+})
+})
+})
+    
+
+</script>
+</head>
+
+<body background="bg_1.jpg">
+	<div class="topnav">
+		<div class="logo">
+			<nav>
+				<h1 >UPDATE ROUTE_DETAILS</h1>
+			</nav>
+		</div>
+		<nav>
+			<a href="UpdateBusDetails.html">Update BUS</a> <a
+				href="UpdateRoute.html">Update Route</a>
+
+		</nav>
+	</div>
+		<div class="booking-form-box">
+		<div class="booking-form">
+			<form id="details">
+				<br />
+				<label id="ss">UPDATE ROUTE DETAILS</label>
+				<br>
+				
+				<br /> <label id="1">SOURCE</label> <input  type="text"  class="form-control"
+					name="src" id="source" placeholder="FROM" pattern="[A-Z]+" required />
+				<label id="1">DESTINATION</label> <input  type="text" class="form-control"
+					name="dest" id="destination" placeholder="TO" pattern="[A-Z]+"
+					required /> <label id="1">Duration </label> <input id="duration"
+					type="number" class="form-control select-date" placeholder="hrs"> <label id="1">DISTANCE</label>
+				<input id="distance" type="number" class="form-control select-date" placeholder="km">
+		<div class="input-grp input-submit">
+			<button type="submit" class="button">
+				<span>SUBMIT</span>
+			</button>
+			<br />
+			<br />
+		</div>
+		</form>
+		</div>
+		</div>
+
+		<table id="tb">
+
+			<tr style="border: 1px solid white;">
+
+			</tr>
+		</table>
+		<br /> <br /> <br />
+
+
+		
+</body>
+</html>

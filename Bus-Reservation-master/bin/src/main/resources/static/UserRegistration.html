@@ -1,0 +1,133 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="UserRegistration.css"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src= "https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    function Validate() {
+        var pass = document.getElementById("password").value;
+        var cnfpass = document.getElementById("confirmpassword").value;
+        if (pass != cnfpass) {
+            alert("Passwords do not match.");
+        }
+else{
+var obj={
+first_name: $("#fname").val(),
+last_name: $("#lname").val(),
+gender:$("#gender").val(),
+dob:$("date").val(),
+phone_no:$("#number").val(),
+email: $("#email").val(),
+password:$("#password").val()
+}
+
+
+//var url ='/register';
+$.ajax({
+    url : '/register', //the url we want to hit
+    method : 'POST',//get or post any other method of http
+    data : JSON.stringify(obj),//What we want to send to the server
+    contentType : 'application/json',
+    success : function(response) {
+    alert(JSON.stringify(response));
+    
+    }
+   })
+}
+}
+
+</script>
+
+  
+</head>
+<body>
+<div class="topnav">
+<div class="logo">
+<nav>
+<img src="https://cdn.pixabay.com/photo/2018/03/07/16/07/coach-3206326__340.png" width="120" height="100">
+</nav>
+</div>
+<nav>
+<a href="index.html">Home</a>
+<a href="Newlogin.html">Sign In</a>
+<a href="Newregisterhtml.html">Sign Up</a>
+<a href="">About Us</a>
+</nav>
+</div>
+
+<div class="booking-form-box">
+ <div class="booking-form">
+    <form id="register">
+     <label id="ss">REGISTER</label><br/>
+        <div class="input-grp-container">
+        <div class="input-grp">
+      <label>Enter FistName</label>
+      <input type="text" class="form-control" pattern="[A-Za-z]+" placeholder="fname" id="fname" required/>
+      </div>
+      </div>
+      <div class="input-grp-container">
+        <div class="input-grp">
+      <label>Enter LastName</label>
+      <input type="text" class="form-control" placeholder="lname" id="lname"  pattern="[A-Za-z]+" required/>
+      </div>
+      </div>
+      <label>Enter Gender</label>
+       <div class="radio-btn">
+      <input type="radio" class="btn"  id="gender" name="gender" value="male"/>
+      <span id="sp">MALE</span>
+      <input type="radio" class="btn"  id="gender" name="gender" value="female"/>
+      <span id="sp">FEMALE</span>
+    </div>
+    <div class="input-grp-container">
+        <div class="input-grp">
+    <label> Enter Date Of Birth </label>
+    <input id="date" type="date" class="form-control select-date">
+   </div>
+      </div>
+<div class="input-grp-container">
+        <div class="input-grp">
+      
+      <label> Enter ContactNumber </label>
+      <input type="text" class="form-control" placeholder="mobile number" id="number" pattern = "[0-9]+" maxlength="10" required/>
+ </div>
+      </div>
+<div class="input-grp-container">
+        <div class="input-grp">
+      <label>Enter EmailAddress </label>
+       <input type="email" class="form-control" placeholder="@gmail.com" id="email" required/>
+ </div>
+      </div>
+<div class="input-grp-container">
+        <div class="input-grp">
+     <label> Enter Password</label>
+     <input type="password" class="form-control" placeholder="password" id="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" reqiured/>
+ </div>
+      </div>
+<div class="input-grp-container">
+        <div class="input-grp">     
+ <label>Confirm Password</label>
+       <input type="password" class="form-control" placeholder="renter password" id="confirmpassword" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"required/>
+   </div>
+      </div> 
+<div class="input-grp input-submit"> 
+      <input class="button" type="submit" id="btnSubmit" value="Submit" onclick="return Validate()" /><br><br>
+      <p class="message">Already registered? <a href="Newlogin.html">Sign In</a></p>
+</div>
+    </form>
+</div>
+</div>
+
+<div class="topnav">
+<nav>
+<a href="">Copyright@</a>
+<a href="">Contact Us</a>
+</nav>
+
+</div>
+</body>
+</html>
+
+
+
+
+

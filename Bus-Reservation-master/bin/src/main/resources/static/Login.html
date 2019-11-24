@@ -1,0 +1,86 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="Login.css" />
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+	//Check if the localStorage object exists
+
+	$(function() {
+		$("#login").submit(function(evt) {
+			evt.preventDefault();
+			var obj = {
+				email : $("#email").val(),
+				password : $("#password").val()
+
+			}
+			var email = $("#email").val();
+			var password = $("#password").val();
+			var url = '/login';
+			$.ajax({
+				url : url, 
+				method : 'POST',
+				data : JSON.stringify(obj),
+				contentType : 'application/json',
+				success : function(response) {
+					var email = response.email;
+					//sessionStorage['response'] = response;
+					sessionStorage['response'] = JSON.stringify(response);
+					if (response.customerId==-1)
+						alert("Wrong password !!");
+					else{
+						window.location.replace("Index.html");
+					}
+						
+				}
+			})
+		})
+	})
+</script>
+</head>
+<body>
+	<div class="topnav">
+		<div class="logo">
+			<nav>
+				<img
+					src="https://cdn.pixabay.com/photo/2018/03/07/16/07/coach-3206326__340.png"
+					width="120" height="100">
+			</nav>
+		</div>
+		<nav>
+			<a href="Index.html">Home</a> <a href="Login.html">Sign In</a> <a
+				href="UserRegistration.html">Sign Up</a> <a href="">About Us</a>
+		</nav>
+	</div>
+
+	<div class="login">
+		<form id="login" method="post">
+			<center>
+				<b>LOGIN</b>
+			</center>
+			<br /> ENTER EMAIL: <input type="email" placeholder="email"
+				id="email" required /><br />
+			<br /> ENTER PASSWORD: <input type="password" placeholder="password"
+				id="password" required /><br />
+			<br /> <input class="button" type="submit" value="LOGIN" /><br />
+			<br />
+			<p class="message">
+				Not registered? <a href="Newregisterhtml.html">Create an account</a>
+			</p>
+			<br /> <span class="psw">Forgot <a href="reset.html">password?</a></span>
+		</form>
+	</div>
+
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<div class="topnav">
+		<nav>
+			<a href="">Copyright@</a> <a href="">Contact Us</a>
+		</nav>
+
+	</div>
+</body>
+</html>
